@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/lizzn/CLionProjects/long_arithmetic/comparation.cpp">
+			<Option target="long_arithmetic"/>
+		</Unit>
+		<Unit filename="C:/Users/lizzn/CLionProjects/long_arithmetic/comparation.h">
+			<Option target="long_arithmetic"/>
+		</Unit>
 		<Unit filename="C:/Users/lizzn/CLionProjects/long_arithmetic/main.cpp">
 			<Option target="long_arithmetic"/>
 		</Unit>

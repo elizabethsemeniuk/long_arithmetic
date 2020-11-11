@@ -124,6 +124,33 @@ long_arithmetic\fast:
 	$(MAKE) -f CMakeFiles\long_arithmetic.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\long_arithmetic.dir\build
 .PHONY : long_arithmetic\fast
 
+comparation.obj: comparation.cpp.obj
+
+.PHONY : comparation.obj
+
+# target to build an object file
+comparation.cpp.obj:
+	$(MAKE) -f CMakeFiles\long_arithmetic.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\long_arithmetic.dir\comparation.cpp.obj
+.PHONY : comparation.cpp.obj
+
+comparation.i: comparation.cpp.i
+
+.PHONY : comparation.i
+
+# target to preprocess a source file
+comparation.cpp.i:
+	$(MAKE) -f CMakeFiles\long_arithmetic.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\long_arithmetic.dir\comparation.cpp.i
+.PHONY : comparation.cpp.i
+
+comparation.s: comparation.cpp.s
+
+.PHONY : comparation.s
+
+# target to generate assembly for a file
+comparation.cpp.s:
+	$(MAKE) -f CMakeFiles\long_arithmetic.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\long_arithmetic.dir\comparation.cpp.s
+.PHONY : comparation.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -160,6 +187,9 @@ help:
 	@echo ... edit_cache
 	@echo ... long_arithmetic
 	@echo ... rebuild_cache
+	@echo ... comparation.obj
+	@echo ... comparation.i
+	@echo ... comparation.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

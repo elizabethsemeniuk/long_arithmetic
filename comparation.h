@@ -1,0 +1,8 @@
+//
+// Created by lizzn on 11.11.2020.
+//
+
+#ifndef LONG_ARITHMETIC_COMPARATION_H
+#define LONG_ARITHMETIC_COMPARATION_H
+
+#endif //LONG_ARITHMETIC_COMPARATION_H

@@ -77,17 +77,38 @@ CMakeFiles\long_arithmetic.dir\main.cpp.s: cmake_force
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\long_arithmetic.dir\main.cpp.s /c C:\Users\lizzn\CLionProjects\long_arithmetic\main.cpp
 <<
 
+CMakeFiles\long_arithmetic.dir\comparation.cpp.obj: CMakeFiles\long_arithmetic.dir\flags.make
+CMakeFiles\long_arithmetic.dir\comparation.cpp.obj: ..\comparation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\lizzn\CLionProjects\long_arithmetic\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/long_arithmetic.dir/comparation.cpp.obj"
+	C:\PROGRA~2\MICROS~3\2019\COMMUN~1\VC\Tools\MSVC\1425~1.286\bin\Hostx86\x86\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\long_arithmetic.dir\comparation.cpp.obj /FdCMakeFiles\long_arithmetic.dir\ /FS -c C:\Users\lizzn\CLionProjects\long_arithmetic\comparation.cpp
+<<
+
+CMakeFiles\long_arithmetic.dir\comparation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/long_arithmetic.dir/comparation.cpp.i"
+	C:\PROGRA~2\MICROS~3\2019\COMMUN~1\VC\Tools\MSVC\1425~1.286\bin\Hostx86\x86\cl.exe > CMakeFiles\long_arithmetic.dir\comparation.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\lizzn\CLionProjects\long_arithmetic\comparation.cpp
+<<
+
+CMakeFiles\long_arithmetic.dir\comparation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/long_arithmetic.dir/comparation.cpp.s"
+	C:\PROGRA~2\MICROS~3\2019\COMMUN~1\VC\Tools\MSVC\1425~1.286\bin\Hostx86\x86\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\long_arithmetic.dir\comparation.cpp.s /c C:\Users\lizzn\CLionProjects\long_arithmetic\comparation.cpp
+<<
+
 # Object files for target long_arithmetic
 long_arithmetic_OBJECTS = \
-"CMakeFiles\long_arithmetic.dir\main.cpp.obj"
+"CMakeFiles\long_arithmetic.dir\main.cpp.obj" \
+"CMakeFiles\long_arithmetic.dir\comparation.cpp.obj"
 
 # External object files for target long_arithmetic
 long_arithmetic_EXTERNAL_OBJECTS =
 
 long_arithmetic.exe: CMakeFiles\long_arithmetic.dir\main.cpp.obj
+long_arithmetic.exe: CMakeFiles\long_arithmetic.dir\comparation.cpp.obj
 long_arithmetic.exe: CMakeFiles\long_arithmetic.dir\build.make
 long_arithmetic.exe: CMakeFiles\long_arithmetic.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\lizzn\CLionProjects\long_arithmetic\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable long_arithmetic.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\lizzn\CLionProjects\long_arithmetic\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable long_arithmetic.exe"
 	"C:\Program Files\JetBrains\CLion 2020.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\long_arithmetic.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\mt.exe --manifests  -- C:\PROGRA~2\MICROS~3\2019\COMMUN~1\VC\Tools\MSVC\1425~1.286\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\long_arithmetic.dir\objects1.rsp @<<
  /out:long_arithmetic.exe /implib:long_arithmetic.lib /pdb:C:\Users\lizzn\CLionProjects\long_arithmetic\cmake-build-debug\long_arithmetic.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<

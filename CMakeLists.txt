@@ -3,4 +3,4 @@ project(long_arithmetic)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(long_arithmetic main.cpp)
+add_executable(long_arithmetic main.cpp comparation.cpp comparation.h)

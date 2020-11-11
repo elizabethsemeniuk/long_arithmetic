@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Users/lizzn/CLionProjects/long_arithmetic/comparation.cpp" "C:/Users/lizzn/CLionProjects/long_arithmetic/cmake-build-debug/CMakeFiles/long_arithmetic.dir/comparation.cpp.obj"
   "C:/Users/lizzn/CLionProjects/long_arithmetic/main.cpp" "C:/Users/lizzn/CLionProjects/long_arithmetic/cmake-build-debug/CMakeFiles/long_arithmetic.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "MSVC")

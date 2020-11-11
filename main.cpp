@@ -5,6 +5,8 @@ using namespace std;
 class BigNum {
 
 public:
+
+
     vector<int> digits;
     int length;
     bool sign = true;
@@ -40,7 +42,13 @@ public:
         length = 0;
         digits = vector<int>();
     }
+    BigNum(int i) {
+        sign = true;
+        length = 0;
+        digits = vector<int>();
+    }
 };
+BigNum operator +(BigNum a, BigNum b);
 
 BigNum abs(BigNum a){ // модуль числа
     BigNum b = BigNum(a);
@@ -92,8 +100,6 @@ bool operator <(BigNum a, BigNum b){
 bool operator ==(BigNum a, BigNum b){
     return !(a > b || a < b);
 }
-
-BigNum operator +(BigNum a, BigNum b);
 
 BigNum operator -(BigNum a, BigNum b) {
     BigNum c = BigNum();
@@ -216,33 +222,74 @@ BigNum operator +(BigNum a, BigNum b){
     return c;
 }
 
+BigNum operator *(BigNum a, BigNum b){
+    BigNum c = BigNum();
+    for (int i = 0; i < a.length + b.length; i++) {
+        c.digits.push_back(0);
+        c.length++;
+    }
+
+    int rest = 0;
+    int result = 0;
+    for (int j = 0; j < b.length; j++){
+        for (int i = 0; i < a.length; i++){
+            result = a.digits[i] * b.digits[j] + rest;
+            c.digits[i + j] += result % 10;
+            rest = result / 10;
+        }
+        if (rest > 0)
+            c.digits[j + a.length] += rest;
+    }
+    rest = 0;
+    for (int i = 0; i < c.digits.size(); i++){
+        c.digits[i] += rest;
+        rest = c.digits[i] / 10;
+        c.digits[i] %= 10;
+
+    }
+    while (rest > 0){
+        c.digits.push_back(rest % 10);
+        rest /= 10;
+        c.length++;
+    }
+    c.length = c.digits.size();
+    int i = c.length - 1;
+    while (i > 0 && c.digits[i] == 0) {
+            c.digits.pop_back();
+            c.length--;
+            i--;
+    }
+    c.sign = a.sign == b.sign; // signs
+    return c;
+}
+
 int main() {
     BigNum a = BigNum("1");
     BigNum b = BigNum("-22");
     BigNum c = BigNum("1234567827483828383893828238989938389893389");
 
-    a = BigNum("1");
-    b = BigNum("-22");
-    c = a - b;
+    a = BigNum("-12345678910");
+    b = BigNum("2222222222");
+    c = a * b;
     print(a);
-    cout << " - ";
+    cout << " * ";
     print(b);
     cout << " = ";
     print(c);
     cout << endl;
 
-    a = BigNum("-1");
+    a = BigNum("0");
     b = BigNum("22");
-    c = a - b;
+    c = a * b;
     print(a);
-    cout << " - ";
+    cout << " * ";
     print(b);
     cout << " = ";
     print(c);
     cout << endl;
 
-    a = BigNum("-1");
-    b = BigNum("22");
+    a = BigNum("-875");
+    b = BigNum("875");
     c = a + b;
     print(a);
     cout << " + ";

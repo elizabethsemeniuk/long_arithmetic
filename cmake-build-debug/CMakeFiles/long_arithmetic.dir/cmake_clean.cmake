@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/long_arithmetic.dir/comparation.cpp.obj"
   "CMakeFiles/long_arithmetic.dir/main.cpp.obj"
   "long_arithmetic.exe"
   "long_arithmetic.exe.manifest"
