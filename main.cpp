@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
 class BigNum {
@@ -31,10 +32,14 @@ public:
         }
     }
 
-    BigNum(BigNum const &a){
+    void setBigNum(BigNum const &a){
         sign = a.sign;
         digits = a.digits;
         length = a.length;
+    }
+
+    BigNum(BigNum const &a){
+       setBigNum(a);
     }
 
     BigNum(){
@@ -42,10 +47,9 @@ public:
         length = 0;
         digits = vector<int>();
     }
+
     BigNum(int i) {
-        sign = true;
-        length = 0;
-        digits = vector<int>();
+        setBigNum(BigNum(std::to_string(i)));
     }
 };
 BigNum operator +(BigNum a, BigNum b);
@@ -263,9 +267,23 @@ BigNum operator *(BigNum a, BigNum b){
     return c;
 }
 
+BigNum pow (BigNum a, int n){
+    if (n == 0)
+        return BigNum(1);
+    if (n == 1)
+        return a;
+    BigNum c = pow(a, n/2);
+    c = c * c;
+    if (n % 2 == 0)
+        return c;
+    else
+        return c * a;
+}
+
 int main() {
     BigNum a = BigNum("1");
     BigNum b = BigNum("-22");
+    BigNum x = BigNum();
     BigNum c = BigNum("1234567827483828383893828238989938389893389");
 
     a = BigNum("-12345678910");
@@ -278,8 +296,13 @@ int main() {
     print(c);
     cout << endl;
 
-    a = BigNum("0");
-    b = BigNum("22");
+    a = BigNum(2);
+    x = pow(a, 12);
+    print(x);
+    cout << endl;
+
+    a = BigNum("64");
+    b = BigNum("64");
     c = a * b;
     print(a);
     cout << " * ";
@@ -298,6 +321,5 @@ int main() {
     print(c);
     cout << endl;
 
-    print(c);
     return 0;
 }
