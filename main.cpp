@@ -301,8 +301,8 @@ int main() {
     print(x);
     cout << endl;
 
-    a = BigNum("64");
-    b = BigNum("64");
+    a = BigNum("123456");
+    b = BigNum("78910");
     c = a * b;
     print(a);
     cout << " * ";
