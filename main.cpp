@@ -236,18 +236,19 @@ BigNum operator *(BigNum a, BigNum b){
     int rest = 0;
     int result = 0;
     for (int j = 0; j < b.length; j++){
-        for (int i = 0; i < a.length; i++){
-            result = a.digits[i] * b.digits[j] + rest;
-            c.digits[i + j] += result % 10;
+        for (int k = 0; k < a.length; k++){
+            result = a.digits[k] * b.digits[j] + rest;
+            c.digits[k + j] += result % 10;
             rest = result / 10;
         }
         if (rest > 0)
             c.digits[j + a.length] += rest;
+        rest = 0;
     }
     rest = 0;
     for (int i = 0; i < c.digits.size(); i++){
         c.digits[i] += rest;
-        rest = c.digits[i] / 10;
+        rest = c.digits[i] / 10; // hueta
         c.digits[i] %= 10;
 
     }
@@ -296,13 +297,9 @@ int main() {
     print(c);
     cout << endl;
 
-    a = BigNum(2);
-    x = pow(a, 12);
-    print(x);
-    cout << endl;
 
-    a = BigNum("123456");
-    b = BigNum("78910");
+    a = BigNum("64");
+    b = BigNum("64");
     c = a * b;
     print(a);
     cout << " * ";
@@ -313,7 +310,7 @@ int main() {
 
     a = BigNum("-875");
     b = BigNum("875");
-    c = a + b;
+   // c = a + b;
     print(a);
     cout << " + ";
     print(b);
