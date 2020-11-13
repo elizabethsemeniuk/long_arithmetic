@@ -227,6 +227,7 @@ BigNum operator +(BigNum a, BigNum b){
 }
 
 BigNum operator *(BigNum a, BigNum b){
+
     BigNum c = BigNum();
     for (int i = 0; i < a.length + b.length; i++) {
         c.digits.push_back(0);
@@ -248,7 +249,7 @@ BigNum operator *(BigNum a, BigNum b){
     rest = 0;
     for (int i = 0; i < c.digits.size(); i++){
         c.digits[i] += rest;
-        rest = c.digits[i] / 10; // hueta
+        rest = c.digits[i] / 10;
         c.digits[i] %= 10;
 
     }
@@ -268,6 +269,35 @@ BigNum operator *(BigNum a, BigNum b){
     return c;
 }
 
+BigNum operator * (BigNum a, int b){
+    BigNum c = BigNum(b);
+    c = c * a;
+    return c;
+}
+
+BigNum operator + (BigNum a, int b){
+    BigNum c = BigNum(b);
+    c = c + a;
+    return c;
+}
+
+BigNum operator / (BigNum a, BigNum b){
+
+}
+/*BigNum search (BigNum left, BigNum right, BigNum x, BigNum  y){
+    int middle = (left + right);
+    if (left == right)
+        return  left;
+    else if (x < y)
+        return 0;
+    else if (middle * x < y && middle * x == y && (middle + 1) * x > y)
+        return middle;
+    else if (middle * x > y)
+        return  search(left, middle, x, y);
+    else
+        return  search(middle, right, x, y);
+}*/
+
 BigNum pow (BigNum a, int n){
     if (n == 0)
         return BigNum(1);
@@ -282,16 +312,16 @@ BigNum pow (BigNum a, int n){
 }
 
 int main() {
-    BigNum a = BigNum("1");
-    BigNum b = BigNum("-22");
+    BigNum a = BigNum("6");
+    BigNum b = BigNum("2");
     BigNum x = BigNum();
     BigNum c = BigNum("1234567827483828383893828238989938389893389");
 
-    a = BigNum("-12345678910");
-    b = BigNum("2222222222");
-    c = a * b;
+    a = BigNum("12");
+    b = BigNum("6");
+    c = a / b;
     print(a);
-    cout << " * ";
+    cout << " / ";
     print(b);
     cout << " = ";
     print(c);
