@@ -60,17 +60,6 @@ BigNum abs(BigNum a){ // модуль числа
     return b;
 }
 
-void print(BigNum a){
-    int i = a.length - 1;
-    if (!a.sign)
-        cout << '-';
-    while (i >= 0){
-        cout << a.digits[i];
-        i--;
-    }
-    //cout << endl;
-}
-
 bool operator >(BigNum a, BigNum b){
     if (a.sign != b.sign){
         if (a.sign)
@@ -107,7 +96,7 @@ bool operator ==(BigNum a, BigNum b){
 
 BigNum operator -(BigNum a, BigNum b) {
     BigNum c = BigNum();
-        int debt = 0;
+    int debt = 0;
     if (a.sign == b.sign) {
         if (a.length > b.length) {
             for (int i = 0; i < a.length - b.length; i++) {
@@ -193,14 +182,14 @@ BigNum operator +(BigNum a, BigNum b){
         if (a.length < b.length) {
             for (int i = 0; i < b.length - a.length; i++) {
                 a.digits.push_back(0);
-                a.length++;
             }
+            a.length = b.length;
         }
         if (b.length < a.length) {
             for (int i = 0; i < a.length - b.length; i++) {
                 b.digits.push_back(0);
-                b.length++;
             }
+            b.length = a.length;
         }
         for (int i = 0; i < a.length; i++) {
             int sum = (a.digits[i] + b.digits[i] + rest) % 10;
@@ -261,9 +250,9 @@ BigNum operator *(BigNum a, BigNum b){
     c.length = c.digits.size();
     int i = c.length - 1;
     while (i > 0 && c.digits[i] == 0) {
-            c.digits.pop_back();
-            c.length--;
-            i--;
+        c.digits.pop_back();
+        c.length--;
+        i--;
     }
     c.sign = a.sign == b.sign; // signs
     return c;
@@ -281,35 +270,137 @@ BigNum operator + (BigNum a, int b){
     return c;
 }
 
-BigNum operator / (BigNum a, BigNum b){
+int search(BigNum x, BigNum  y){
+    for (int i = 1; i <= 9; i++){
+        BigNum a = y * i;
+        BigNum b = y * (i + 1);
+        bool p1 = a == x;
+        bool p2 = a < x;
+        bool p3 = b > x;
+        if ((p1 || p2) && p3)
+            return i;
+    }
 
 }
-/*BigNum search (BigNum left, BigNum right, BigNum x, BigNum  y){
-    int middle = (left + right);
-    if (left == right)
-        return  left;
-    else if (x < y)
-        return 0;
-    else if (middle * x < y && middle * x == y && (middle + 1) * x > y)
-        return middle;
-    else if (middle * x > y)
-        return  search(left, middle, x, y);
-    else
-        return  search(middle, right, x, y);
-}*/
 
-BigNum pow (BigNum a, int n){
-    if (n == 0)
+std::pair<BigNum, BigNum> pairDivMod(BigNum a, BigNum b){
+    BigNum z = BigNum(0);
+    BigNum result = BigNum(0);
+    for (int i = a.length - 1; i >= 0; i--) {
+        if(i >= a.length)
+            continue;
+        if(a < b)
+            return  {result, z};
+        z = z * 10 + a.digits[i];
+        if (z.length < b.length || abs(z) < abs(b)) {
+            result = result * 10;
+            continue;
+        }
+        int midresult = search(z, b);
+        BigNum current = b * midresult;
+        z = z - current;
+        for (int j = 0; j < i; j++){
+            current = current * 10;
+        }
+        result = result * 10 + midresult;
+    }
+    return  {result, z};
+}
+
+BigNum operator /(BigNum a, BigNum b) {
+    return pairDivMod(a, b).first;
+}
+
+void print(BigNum a){
+    int i = a.length - 1;
+    if (!a.sign)
+        cout << '-';
+    while (i >= 0){
+        cout << a.digits[i];
+        i--;
+    }
+}
+
+BigNum pow (BigNum a, BigNum b){
+    if (b == 0)
         return BigNum(1);
-    if (n == 1)
+    if (b == 1)
         return a;
-    BigNum c = pow(a, n/2);
+    BigNum c = pow(a, b/2);
     c = c * c;
-    if (n % 2 == 0)
+    BigNum x = BigNum(2);
+    if (pairDivMod(b, x).second == 0)
         return c;
     else
         return c * a;
 }
+
+BigNum subMod(BigNum a, BigNum b){
+    BigNum c = a - b;
+    string moduleStr;
+    cout << "Enter module, please:" << endl;
+    cin >> moduleStr;
+    BigNum module = BigNum(moduleStr);
+    return pairDivMod(c, module).second;
+}
+
+BigNum addMod(BigNum a, BigNum b){
+    BigNum c = a + b;
+    string moduleStr;
+    cout << "Enter module, please:" << endl;
+    cin >> moduleStr;
+    BigNum module = BigNum(moduleStr);
+    return pairDivMod(c, module).second;
+}
+
+BigNum multMod(BigNum a, BigNum b){
+    BigNum c = a * b;
+    string moduleStr;
+    cout << "Enter module, please:" << endl;
+    cin >> moduleStr;
+    BigNum module = BigNum(moduleStr);
+    return pairDivMod(c, module).second;
+}
+
+BigNum divMod(BigNum a, BigNum b){
+    BigNum c = a / b;
+    string moduleStr;
+    cout << "Enter module, please:" << endl;
+    cin >> moduleStr;
+    BigNum module = BigNum(moduleStr);
+    return pairDivMod(c, module).second;
+}
+
+BigNum powMod(BigNum a, BigNum b){
+    BigNum c = pow(a, b);
+    string moduleStr;
+    cout << "Enter module, please:" << endl;
+    cin >> moduleStr;
+    BigNum module = BigNum(moduleStr);
+    return pairDivMod(c, module).second;
+}
+
+BigNum binSearch(BigNum left, BigNum right, BigNum a){
+    BigNum middle = (left + right) / BigNum(2);
+    if ((middle * middle == a || middle * middle < a) && ((middle + 1)*(middle + 1)) > a)
+        return  middle;
+    if (middle * middle < a)
+        return  binSearch(middle + 1, right, a);
+    else
+        return  binSearch(left, middle, a);
+}
+
+BigNum sqrt(BigNum a){
+    BigNum middle = 1 + (a / 4);
+    if (a == 0)
+        return 0;
+    if (a == 1)
+        return 1;
+    else
+        return binSearch(BigNum(2), a / BigNum(2), a);
+}
+
+
 
 int main() {
     BigNum a = BigNum("6");
@@ -317,11 +408,43 @@ int main() {
     BigNum x = BigNum();
     BigNum c = BigNum("1234567827483828383893828238989938389893389");
 
+   // a = BigNum("4096");
+    b = BigNum("123456798960569059");
+    c =  sqrt(b);
+   // print(a);
+    cout << " sqrt ";
+    print(b);
+    cout << " = ";
+    print(c);
+    cout << endl;
+
+
     a = BigNum("12");
     b = BigNum("6");
+    int f = 10;
     c = a / b;
     print(a);
     cout << " / ";
+    print(b);
+    cout << " = ";
+    print(c);
+    cout << endl;
+
+    a = BigNum("3");
+    b = BigNum("9");
+    c = pow(a,b);
+    print(a);
+    cout << "^";
+    print(b);
+    cout << " = ";
+    print(c);
+    cout << endl;
+
+    a = BigNum("400");
+    b = BigNum("9");
+    c = a + b;
+    print(a);
+    cout << " * ";
     print(b);
     cout << " = ";
     print(c);
@@ -338,15 +461,16 @@ int main() {
     print(c);
     cout << endl;
 
-    a = BigNum("-875");
-    b = BigNum("875");
-   // c = a + b;
+    a = BigNum("4096");
+    b = BigNum("4");
+    c = a / b;
     print(a);
-    cout << " + ";
+    cout << " / ";
     print(b);
     cout << " = ";
     print(c);
     cout << endl;
+
 
     return 0;
 }
