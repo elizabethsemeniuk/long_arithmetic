@@ -154,7 +154,7 @@ BigNum operator -(BigNum a, BigNum b) {
                 else
                     break;
             }
-            c.sign = true;
+            c.sign = false; //false??
         }
         if (abs(a) == abs(b)) {
             c = BigNum("0");
@@ -290,7 +290,7 @@ std::pair<BigNum, BigNum> pairDivMod(BigNum a, BigNum b){
         if(i >= a.length)
             continue;
         if(a < b)
-            return  {result, z};
+            return  {result, a};
         z = z * 10 + a.digits[i];
         if (z.length < b.length || abs(z) < abs(b)) {
             result = result * 10;
@@ -362,14 +362,14 @@ BigNum multMod(BigNum a, BigNum b){
     return pairDivMod(c, module).second;
 }
 
-BigNum divMod(BigNum a, BigNum b){
+/*BigNum divMod(BigNum a, BigNum b){ // ПЕРЕПИСАТЬ
     BigNum c = a / b;
     string moduleStr;
     cout << "Enter module, please:" << endl;
     cin >> moduleStr;
     BigNum module = BigNum(moduleStr);
     return pairDivMod(c, module).second;
-}
+} */
 
 BigNum powMod(BigNum a, BigNum b){
     BigNum c = pow(a, b);
@@ -400,12 +400,59 @@ BigNum sqrt(BigNum a){
         return binSearch(BigNum(2), a / BigNum(2), a);
 }
 
+void ex_al_eu_in(BigNum r1, BigNum r2, BigNum x1, BigNum x2, BigNum y1, BigNum y2, BigNum &gcd, BigNum &a, BigNum &b) {
+    BigNum r3 = r1 - r2 * (r1 / r2);
+    BigNum x3 = x1 - x2 * (r1 / r2);
+    BigNum y3 = y1 - y2 * (r1 / r2);
+    if (!(r3 == BigNum(0)))
+        ex_al_eu_in(r2, r3, x2, x3, y2, y3, gcd, a, b);
+    else {
+        gcd = r2;
+        a = x2;
+        b = y2;
+    }
+}
 
+void ex_al_eu(BigNum r1, BigNum r2, BigNum &gcd, BigNum &a, BigNum &b) {
+    ex_al_eu_in(r1 > r2 ? r1 : r2, r1 < r2 ? r1 : r2, BigNum(1), BigNum(0), BigNum(0), BigNum(1), gcd, r1 > r2 ? a : b, r1 < r2 ? a : b);
+}
+
+BigNum reverseByMod(BigNum a, BigNum b){
+    BigNum c = b;
+    BigNum gcd = BigNum(1);
+    ex_al_eu(a,b,gcd,a,b);
+    if(!a.sign)
+        a = a + c;
+    return a;
+}
+
+BigNum solve_system(vector<std::pair<BigNum, BigNum>> equations){ // num and mod
+    cout << "Solving system of " << equations.size() << " equations:" << endl;
+    for(auto equation : equations){
+        cout << "x = ";
+        print(equation.first);
+        cout <<  " (mod ";
+        print(equation.second);
+        cout << ");" << endl;
+    }
+    BigNum all_mod = BigNum(1);
+    BigNum result = BigNum(0);
+    for (auto pr : equations){
+        BigNum new_first = (pr.first - result);
+        while (!new_first.sign){
+            new_first = new_first + pr.second;
+        }
+        new_first = new_first * reverseByMod(all_mod, pr.second);
+        new_first = pairDivMod(new_first, pr.second).second;
+        result = result + new_first * all_mod; // 2 17
+        all_mod = all_mod * pr.second; // 5 35
+    }
+    return result;
+}
 
 int main() {
     BigNum a = BigNum("6");
     BigNum b = BigNum("2");
-    BigNum x = BigNum();
     BigNum c = BigNum("1234567827483828383893828238989938389893389");
 
    // a = BigNum("4096");
@@ -415,6 +462,67 @@ int main() {
     cout << " sqrt ";
     print(b);
     cout << " = ";
+    print(c);
+    cout << endl;
+
+    // solve_system(vector<std::pair<BigNum, BigNum>> equations)
+
+    vector<std::pair<BigNum, BigNum>> test = {{BigNum(2), BigNum(5)},
+                                              {BigNum(3), BigNum(7)},
+                                              {BigNum(5), BigNum(11)}};
+    c = solve_system(test);
+    cout << "Result: ";
+    print(c);
+    cout << endl;
+
+    vector<std::pair<BigNum, BigNum>> test4 = {{BigNum(5), BigNum(9)},
+                                              {BigNum(7), BigNum(8)},
+                                              {BigNum(3), BigNum(7)}};
+    c = solve_system(test4);
+    cout << "Result: ";
+    print(c);
+    cout << endl;
+    vector<std::pair<BigNum, BigNum>> test1 = {{BigNum(1), BigNum(5)},
+                                              {BigNum(2), BigNum(7)}};
+    c = solve_system(test1);
+    cout << "Result: ";
+    print(c);
+    cout << endl;
+
+    vector<std::pair<BigNum, BigNum>> test2 = {{BigNum(0), BigNum(2)},
+                                               {BigNum(0), BigNum(4)}};
+    c = solve_system(test2);
+    cout << "Result: ";
+    print(c);
+    cout << endl;
+
+    a = BigNum(5);
+    b = BigNum(13);
+    c = reverseByMod(a, b);
+    print(a);
+    cout << "^(-1) (mod ";
+    print(b);
+    cout << ") = ";
+    print(c);
+    cout << endl;
+
+    a = BigNum(5);
+    b = BigNum(7);
+    c = reverseByMod(a, b);
+    print(a);
+    cout << "^(-1) (mod ";
+    print(b);
+    cout << ") = ";
+    print(c);
+    cout << endl;
+
+    a = BigNum(71);
+    b = BigNum(91);
+    c = reverseByMod(a, b);
+    print(a);
+    cout << "^(-1) (mod ";
+    print(b);
+    cout << ") = ";
     print(c);
     cout << endl;
 
@@ -444,7 +552,7 @@ int main() {
     b = BigNum("9");
     c = a + b;
     print(a);
-    cout << " * ";
+    cout << " + ";
     print(b);
     cout << " = ";
     print(c);
